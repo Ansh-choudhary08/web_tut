@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f0f2f5;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            align-items: center;
+        }
+
+        input {
+            width: 40%;
+            padding: 12px;
+            margin: 8px 5px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #1a73e8;
+        }
+
+        button {
+            background-color: #1a73e8;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #155ab6;
+            
+        }
+
+        .result {
+            font-size: 20px;
+            color: #333;
+            margin-top: 20px;
+            border: solid 1px rgb(255, 255, 255);
+            border-radius: 2px;
+            height: auto;
+            width: 50%;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <input type="text" placeholder="value 1">
+        <input type="text" placeholder="value 2"> 
+        <button class="add">+</button>
+        <button class="mul">*</button>
+        <button class="sub">-</button>
+        <button class="div">/</button>
+        <p class="result"></p>
+        <button class="del">Delete</button>
+    </div>
+    <script src="marks.js"></script>
+</body>
+</html>
