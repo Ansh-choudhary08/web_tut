@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Expense Tracker - Minimal Clone</title>
+    <style>
+      /* Minimal CSS for a clean centered card layout */
+      :root {
+        --card-w: 520px;
+        --muted: #777;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica,
+          Arial;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+        background: #f4f6f8;
+      }
+
+      .card {
+        width: var(--card-w);
+        background: #fff;
+        border-radius: 10px;
+        padding: 22px 26px;
+        box-shadow: 0 6px 18px rgba(30, 40, 50, 0.08);
+      }
+
+      h1 {
+        margin: 0 0 18px;
+        font-size: 26px;
+        text-align: center;
+      }
+
+      label {
+        display: block;
+        font-size: 13px;
+        color: var(--muted);
+        margin-top: 10px;
+      }
+
+      input[type="text"],
+      input[type="number"],
+      input[type="date"],
+      textarea {
+        width: 100%;
+        padding: 9px 10px;
+        margin-top: 6px;
+        border: 1px solid #e0e3e6;
+        border-radius: 6px;
+        font-size: 14px;
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 60px;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 10px 14px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      .btn-green {
+        background: #2fb14b;
+        color: #fff;
+        width: 100%;
+        margin-top: 14px;
+      }
+
+      .footer-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 16px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 12px;
+        font-size: 14px;
+      }
+
+      th,
+      td {
+        padding: 8px 6px;
+        text-align: left;
+        border-bottom: 1px solid #f0f0f0;
+      }
+
+      th {
+        font-weight: 700;
+        color: #333;
+      }
+
+      .small {
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .action-btn {
+        background: #e9eef3;
+        border-radius: 6px;
+        padding: 6px 8px;
+        border: 1px solid #d7dee6;
+        cursor: pointer;
+      }
+
+      .total {
+        font-weight: 700;
+      }
+
+      .controls {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      @media (max-width: 560px) {
+        .card {
+          width: 92vw;
+          padding: 16px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="card">
+      <h1>Expense Tracker</h1>
+
+      <label
+        >Expense Name
+        <input id="name" type="text" placeholder="e.g. Groceries" />
+      </label>
+
+      <label
+        >Amount (₹)
+        <input id="amount" type="number" placeholder="e.g. 500" />
+      </label>
+
+      <label
+        >Description
+        <textarea
+          id="desc"
+          placeholder="e.g. Bought fruits and vegetables"
+        ></textarea>
+      </label>
+
+      <label
+        >Date
+        <input id="date" type="date" />
+      </label>
+
+      <button id="add" class="btn btn-green">Add Expense</button>
+
+      <div
+        style="display: flex; align-items: center; gap: 8px; margin-top: 12px"
+      >
+      <table id="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Amount</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <div class="footer-row">
+        <div class="small">Total: <span id="total">₹0</span></div>
+      </div>
+    </div>
+    <script>
+      let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+      
+      function addExpense() {
+        const name = document.getElementById('name').value;
+        const amount = document.getElementById('amount').value;
+        const desc = document.getElementById('desc').value;
+        const date = document.getElementById('date').value;
+        
+        if (!name || !amount || !date) return alert('Please fill required fields');
+        
+        expenses.push({ name, amount, desc, date });
+        localStorage.setItem('expenses', JSON.stringify(expenses));
+        renderExpenses();
+        clearForm();
+      }
+
+      function renderExpenses() {
+        const tbody = document.querySelector('tbody');
+        tbody.innerHTML = '';
+        let total = 0;
+        
+        expenses.forEach((exp, i) => {
+          total += Number(exp.amount);
+          tbody.innerHTML += `
+            <tr>
+              <td>${exp.name}</td>
+              <td>₹${exp.amount}</td>
+              <td>${exp.desc || '-'}</td>
+              <td>${exp.date}</td>
+              <td><button class="action-btn" onclick="deleteExpense(${i})">Delete</button></td>
+            </tr>
+          `;
+        });
+        
+        document.getElementById('total').textContent = `₹${total}`;
+      }
+
+      function deleteExpense(index) {
+        expenses.splice(index, 1);
+        localStorage.setItem('expenses', JSON.stringify(expenses));
+        renderExpenses();
+      }
+
+      function clearForm() {
+        document.getElementById('name').value = '';
+        document.getElementById('amount').value = '';
+        document.getElementById('desc').value = '';
+        document.getElementById('date').value = '';
+      }
+
+      document.getElementById('add').onclick = addExpense;
+      renderExpenses();
+    </script>
+  </body>
+</html>
