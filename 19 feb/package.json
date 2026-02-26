@@ -1,0 +1,13 @@
+{
+  "name": "19-feb",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "errorhandling.js",
+  "scripts": {
+    "chacha": "node errorhandling3.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

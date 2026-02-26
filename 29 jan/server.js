@@ -1,9 +1,13 @@
-const http=require("http");
-const server = http.createServer((req,res)=>{
-    res.end("Hello World\n");
-});
-const PORT=3000;
-server.listen(PORT,()=>{
-    console.log(`Server running at http://localhost:${PORT}/`);
-});
+async function startServer() {
+  const express = require('express');
+  const app = express();
+  const port = 3000;   
+    app.get('/', (req, res) => {
+        res.send('Hello World!');
+    });
+    app.listen(port, () => {
+        console.log(`Example app listening at http://localhost:${port}`);
+    });
+}
+startServer();
 
