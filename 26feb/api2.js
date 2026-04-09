@@ -29,6 +29,7 @@ app.post('/users', (req, res) => {
         email: req.body.email
     };
     users.push(newUser);
+    res.json(users);
     res.status(201).json(newUser);
 });
 app.put('/users/:id', (req, res) => {
@@ -53,6 +54,7 @@ app.delete('/users/:id', (req, res) => {
     else {
         res.status(404).json({ message: 'User not found' });
     }
+    res.json(users);
 });
 
 
